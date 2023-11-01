@@ -26,10 +26,14 @@ import matplotlib.pyplot as plt
 df=pd.read_csv('/content/titanic_dataset.csv')
 df.head()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/a73701d1-e33a-4409-accf-123151342664)
+
 ## checking data
 ```
 df.isnull().sum()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/1f67200e-39db-48f3-a525-8ea99daf3eaa)
+
 ## removing unnecessary data variables
 ```
 df.drop('Cabin',axis=1,inplace=True)
@@ -39,18 +43,24 @@ df.drop('PassengerId',axis=1,inplace=True)
 df.drop('Parch',axis=1,inplace=True)
 df.head()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/795decc9-49c6-4033-91a1-fca31636a587)
+
 ## cleaning data
 ```
 df['Age']=df['Age'].fillna(df['Age'].median())
 df['Embarked']=df['Embarked'].fillna(df['Embarked'].mode()[0])
 df.isnull().sum()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/0e45e20f-cf13-406c-ad55-8501993ac22a)
+
 ## removing outliers 
 ```
 plt.title("Dataset with outliers")
 df.boxplot()
 plt.show()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/de490215-8a08-49c7-a83c-0c63128d201b)
+
 ```
 cols = ['Age','SibSp','Fare']
 Q1 = df[cols].quantile(0.25)
@@ -61,6 +71,8 @@ plt.title("Dataset after removing outliers")
 df.boxplot()
 plt.show()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/161919e2-804d-458b-a5d3-b3e0da813b49)
+
 ```
 from sklearn.preprocessing import OrdinalEncoder
 climate = ['C','S','Q']
@@ -68,6 +80,8 @@ en= OrdinalEncoder(categories = [climate])
 df['Embarked']=en.fit_transform(df[["Embarked"]])
 df.head()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/3c16a0ec-276e-4787-85d3-e66d9f1976e1)
+
 ```
 from sklearn.preprocessing import OrdinalEncoder
 climate = ['male','female']
@@ -75,12 +89,16 @@ en= OrdinalEncoder(categories = [climate])
 df['Sex']=en.fit_transform(df[["Sex"]])
 df.head()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/de72d74f-df55-40be-a0ec-fafb7371568b)
+
 ```
 from sklearn.preprocessing import RobustScaler
 sc=RobustScaler()
 df=pd.DataFrame(sc.fit_transform(df),columns=['Survived','Pclass','Sex','Age','SibSp','Fare','Embarked'])
 df.head()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/01727210-ad2b-4220-ac3f-cbf93b3e8d56)
+
 ```
 import statsmodels.api as sm
 import numpy as np
@@ -99,6 +117,8 @@ df1["Fare"],parameters=stats.yeojohnson(df["Fare"])
 df1["Embarked"]=df["Embarked"]
 df1.skew()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/bb4ab39a-5212-46f6-9067-e1f039908a73)
+
 ```
 import matplotlib
 import seaborn as sns
@@ -113,6 +133,8 @@ from sklearn.linear_model import RidgeCV, LassoCV, Ridge, Lasso
 X = df1.drop("Survived",1) 
 y = df1["Survived"] 
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/1da87d80-925c-44ad-a007-b34582632441)
+
 ##  FEATURE SELECTION:
 ##  FILTER METHOD:
 ```
@@ -121,12 +143,16 @@ cor = df1.corr()
 sns.heatmap(cor, annot=True, cmap=plt.cm.RdPu)
 plt.show()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/ddc3827d-d737-41ae-a5fb-6a357b337c86)
+
 ## HIGHLY CORRELATED FEATURES WITH THE OUTPUT VARIABLE SURVIVED:
 ```
 cor_target = abs(cor["Survived"])
 relevant_features = cor_target[cor_target>0.5]
 relevant_features
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/0a19b57a-c118-4362-83d5-31c23c19a433)
+
 ## BACKWARD ELIMINATION:
 ```
 cols = list(X.columns)
@@ -146,6 +172,8 @@ while (len(cols)>0):
 selected_features_BE = cols
 print(selected_features_BE)
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/3a44909d-5aa5-4ff9-9ace-70d1f5062406)
+
 ## RFE (RECURSIVE FEATURE ELIMINATION):
 ```
 model = LinearRegression()
@@ -158,6 +186,8 @@ model.fit(X_rfe,y)
 print(rfe.support_)
 print(rfe.ranking_)
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/75e19eb1-f8ea-4976-b945-370279290c93)
+
 ## OPTIMUM NUMBER OF FEATURES THAT HAVE HIGH ACCURACY:
 ```
 nof_list=np.arange(1,6)            
@@ -179,6 +209,8 @@ for n in range(len(nof_list)):
 print("Optimum number of features: %d" %nof)
 print("Score with %d features: %f" % (nof, high_score))
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/be59d3f7-c6dd-466a-b0c3-88b5bfb2b482)
+
 ## FINAL SET OF FEATURE:
 ```
 cols = list(X.columns)
@@ -190,6 +222,8 @@ temp = pd.Series(rfe.support_,index = cols)
 selected_features_rfe = temp[temp==True].index
 print(selected_features_rfe)
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/2450afef-95cf-4bd3-a76e-21274f70ae2b)
+
 ## EMBEDDED METHOD:
 ```
 reg = LassoCV()
@@ -205,5 +239,7 @@ imp_coef.plot(kind = "barh")
 plt.title("Feature importance using Lasso Model")
 plt.show()
 ```
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/c10492e7-5881-4cba-9407-b2d9d09618f0)
+
 # RESULT:
 Thus, the various feature selection techniques have been performed on a given dataset successfully.
