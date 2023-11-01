@@ -117,7 +117,7 @@ df1["Fare"],parameters=stats.yeojohnson(df["Fare"])
 df1["Embarked"]=df["Embarked"]
 df1.skew()
 ```
-![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/bb4ab39a-5212-46f6-9067-e1f039908a73)
+![image](https://github.com/Sathya-006/ODD2023-Datascience-Ex-07/assets/121661327/30d6cf75-888f-4546-83fb-69f937616be8)
 
 ```
 import matplotlib
